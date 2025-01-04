@@ -7,16 +7,11 @@
 // PURPOSE: this is a debugging tool for developing / investigating.
 //          Do not use it unless you are willing to crash your sensor.
 //
-//  usage:  make _readRegister(), _writeRegister() and _buffer public
-//
 //          USE AT OWN RISK
-
 
 #include "AGS3871.h"
 
-
 AGS3871 AGS;
-
 
 void setup()
 {
@@ -36,36 +31,28 @@ void setup()
   Serial.print("ADDRESS:\t");
   Serial.println(AGS.getAddress());
 
-
-  for (uint8_t reg = 0; reg < 33; reg++)
+  for (uint8_t addr = 0; addr < 33; addr++)
   {
-    dumpRegister(reg);
+    AGS3871::RegisterData reg;
+    
+    bool b = AGS.readRegister(addr, reg);
+    Serial.print("REG[0x");
+    Serial.print(addr, HEX);
+    Serial.print("]\t");
+
+    for (int i = 0; i < 4; i++)
+    {
+      Serial.print(reg.data[i]);
+      Serial.print("\t");
+    }
+    Serial.println();
+    Serial.println();
   }
 }
 
 
 void loop()
 {
-}
-
-
-uint32_t dumpRegister(uint8_t reg)
-{
-  Serial.print("REG[");
-  Serial.print(reg);
-  Serial.print("]");
-
-  bool b = AGS._readRegister(reg);
-  for (int i = 0; i < 4; i++)
-  {
-    Serial.print("\t");
-    Serial.print(AGS._buffer[i]);
-  }
-
-  Serial.println();
-  delay(100);
-
-  return value;
 }
 
 
