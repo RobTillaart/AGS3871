@@ -53,8 +53,6 @@ void loop()
   Serial.print("\t");
   Serial.print(AGS.dataReady(), HEX);
   Serial.print("\t");
-  Serial.print(AGS.lastStatus(), HEX);
-  Serial.print("\t");
   Serial.print(AGS.lastError(), HEX);
   Serial.println();
 }
