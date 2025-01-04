@@ -1,7 +1,7 @@
 //
-//    FILE: AGS3871_demo_raw.ino
+//    FILE: AGS3871_raw_plotter.ino
 //  AUTHOR: Rob Tillaart
-// PURPOSE: test application
+// PURPOSE: test application not using the library
 //     URL: https://github.com/RobTillaart/AGS3871
 //
 //  default register is 0x00 at start of the sensor
@@ -13,6 +13,8 @@
 
 
 uint8_t buffer[5];
+
+uint8_t cnt = 0;
 
 
 void setup()
@@ -36,19 +38,24 @@ void loop()
   for ( int i = 0; i < 5; i++)
   {
     buffer[i] = Wire.read();
-    Serial.print(buffer[i], HEX);  // for debugging.
-    Serial.print('\t');
   }
-  Serial.println();
 
-  //  CONVERT RAW DATA
-  Serial.print("STAT:\t");
-  Serial.println(buffer[0]);
-  Serial.print("PPB:\t");
-  Serial.println(buffer[1] * 65536UL + buffer[2] * 256 + buffer[3]);
-  Serial.print("CRC:\t");
-  Serial.println(buffer[4]);
-  Serial.println();
+  if (cnt == 0)
+  {
+    //  CONVERT RAW DATA
+    Serial.println("\nSTAT\tPPM\tCRC");
+    cnt = 20;
+  }
+  cnt--;
+  if (buffer[0] == 0x10)
+  {
+    Serial.print(buffer[0]);
+    Serial.print("\t");
+    Serial.print(buffer[1] * 65536UL + buffer[2] * 256 + buffer[3]);
+    Serial.print("\t");
+    Serial.print(buffer[4]);
+    Serial.println();
+  }
 }
 
 

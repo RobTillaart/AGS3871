@@ -48,13 +48,12 @@ unittest(test_constants)
   assertEqual(-11, AGS3871_ERROR_CRC);
   assertEqual(-12, AGS3871_ERROR_READ);
   assertEqual(-13, AGS3871_ERROR_NOT_READY);
-  assertEqual(-14, AGS3871_ERROR_REQUEST);
 }
 
 
 unittest(test_base)
 {
-  AGS3871 AGS(26);
+  AGS3871 AGS;
   Wire.begin();
 
   assertTrue(AGS.begin());
@@ -64,37 +63,12 @@ unittest(test_base)
   assertEqual(0, AGS.lastRead());
 
   assertEqual(26, AGS.getAddress());
-  //assertTrue(AGS.setAddress(42));
-  //assertEqual(42, AGS.getAddress());
-
-  assertEqual(100000, AGS.getI2CResetSpeed());
-  AGS.setI2CResetSpeed(400000);
-  assertEqual(400000, AGS.getI2CResetSpeed());
-
   assertEqual(0, AGS.lastError());
-  assertEqual(0, AGS.lastStatus());
+  assertEqual(0, AGS.dataReady());
 }
-
-
-unittest(test_mode)
-{
-  AGS3871 AGS(26);
-  Wire.begin();
-
-  assertTrue(AGS.begin());
-  assertTrue(AGS.isConnected());   // TODO - GODMODE
-
-  assertEqual(255, AGS.getMode());
-
-  // assertTrue(AGS.setPPBMode());
-  // assertEqual(0, AGS.getMode());
-
-  // assertTrue(AGS.setUGM3Mode());
-  // assertEqual(1, AGS.getMode());
-}
-
 
 
 unittest_main()
+
 
 //  -- END OF FILE --

@@ -19,7 +19,6 @@
 #define AGS3871_ERROR_CRC           -11
 #define AGS3871_ERROR_READ          -12
 #define AGS3871_ERROR_NOT_READY     -13
-#define AGS3871_ERROR_REQUEST       -14
 
 
 class AGS3871
@@ -49,18 +48,16 @@ public:
   void     reset();
   bool     isHeated() { return (millis() - _startTime) > 120000UL; };
 
-
   //  CONFIGURATION
   uint8_t  getAddress() { return _address; };
   uint8_t  getVersion();
 
-
   //  to be called after at least 5 minutes in fresh air.
   //  use with care
+  //  NOT TESTED
   bool     zeroCalibration() { return manualZeroCalibration(0); };
   bool     manualZeroCalibration(uint16_t value = 0);
   bool     getZeroCalibrationData(ZeroCalibrationData &data);
-
 
   //  READ function, be sure to check lastError().
   uint32_t readPPM();   //  parts per million 10^6
@@ -70,7 +67,6 @@ public:
   //  STATUS
   uint32_t lastRead()   { return _lastRead; };    //  timestamp last measurement
   int      lastError();
-  uint8_t  lastStatus() { return _status; };
   uint8_t  dataReady()  { return _status & 0x01; };
 
   //  Reading registers
