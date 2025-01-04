@@ -62,7 +62,7 @@ public:
   //  READ function, be sure to check lastError().
   uint32_t readPPM();   //  parts per million 10^6
   uint32_t lastPPM()    { return _lastPPM; };
-  uint32_t readResistance();  //  internal R of sensor. Meaning unknown.
+  uint32_t readResistance();  //  Meaning unknown.
 
   //  STATUS
   uint32_t lastRead()   { return _lastRead; };    //  timestamp last measurement
