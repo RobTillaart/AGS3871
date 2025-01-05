@@ -30,29 +30,38 @@ void setup()
   Serial.println(AGS.getVersion());
   Serial.print("ADDRESS:\t");
   Serial.println(AGS.getAddress());
-
-  for (uint8_t addr = 0; addr < 33; addr++)
-  {
-    AGS3871::RegisterData reg;
-    
-    bool b = AGS.readRegister(addr, reg);
-    Serial.print("REG[0x");
-    Serial.print(addr, HEX);
-    Serial.print("]\t");
-
-    for (int i = 0; i < 4; i++)
-    {
-      Serial.print(reg.data[i]);
-      Serial.print("\t");
-    }
-    Serial.println();
-    Serial.println();
-  }
 }
 
 
 void loop()
 {
+  //  need to be optimized as not all are meaningful
+  for (uint8_t addr = 0; addr < 33; addr++)
+  {
+    dumpRegister(addr);
+  }
+
+  delay(2000);
+}
+
+
+void dumpRegister(uint8_t addr)
+{
+  AGS3871::RegisterData reg;
+  bool b = AGS.readRegister(addr, reg);
+
+  Serial.print(millis());
+  Serial.print("\tREG[0x");
+  Serial.print(addr, HEX);
+  Serial.print("]\t");
+
+  for (int i = 0; i < 4; i++)
+  {
+    Serial.print(reg.data[i]);
+    Serial.print("\t");
+  }
+  Serial.println();
+  Serial.println();
 }
 
 
